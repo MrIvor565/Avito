@@ -1,0 +1,85 @@
+using System;
+using System.Windows.Forms;
+
+namespace SimpleLoginForm
+{
+    public partial class Form2 : Form
+    {
+        public Form2()
+        {
+            InitializeComponent();
+
+            // Создаем элементы управления
+            Button submitButton = new Button();
+            submitButton.Text = "Подать заявку";
+            submitButton.Location = new Point(50, 50);
+            submitButton.Click += button1_Click;
+
+            Button viewApplicationsButton = new Button();
+            viewApplicationsButton.Text = "Посмотреть заявки";
+            viewApplicationsButton.Location = new Point(50, 100);
+            viewApplicationsButton.Click += button2_Click;
+
+            Button cancelButton = new Button();
+            cancelButton.Text = "Отмена/Выйти";
+            cancelButton.Location = new Point(50, 150);
+            cancelButton.Click += button3_Click;
+
+            // Добавляем элементы управления на форму
+            this.Controls.Add(submitButton);
+            this.Controls.Add(viewApplicationsButton);
+            this.Controls.Add(cancelButton);
+
+            // Задаем заголовок формы
+            this.Text = "Главное меню";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // Открываем Form3 (Подать заявку)
+            Form3 form3 = new Form3();
+            form3.Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // Открываем Form4 (Посмотреть заявки)
+            Form4 form4 = new Form4();
+            form4.Show();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            // Закрываем Form2 
+            this.Close();
+        }
+    }
+
+    // Форма для подачи заявки
+    public partial class Form3 : Form
+    {
+        public Form3()
+        {
+            InitializeComponent();
+
+            // Добавьте элементы управления для формы подачи заявки
+            // Например: текстовые поля, метки, выпадающие списки
+            // ...
+            this.Text = "Подача заявки";
+        }
+    }
+
+    // Форма для просмотра заявок
+    public partial class Form4 : Form
+    {
+        public Form4()
+        {
+            InitializeComponent();
+
+            // Добавьте элементы управления для формы просмотра заявок
+            // Например: DataGridView для отображения данных, кнопки для фильтрации
+            // ...
+            this.Text = "Просмотр заявок";
+        }
+    }
+}

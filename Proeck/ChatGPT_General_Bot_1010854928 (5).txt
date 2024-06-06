@@ -1,0 +1,218 @@
+```csharp
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+
+namespace SimpleLoginForm
+{
+    public partial class Form2 : Form
+    {
+        // Список заявок
+        public static List<Application> applications = new List<Application>();
+
+        public Form2()
+        {
+            InitializeComponent();
+
+            // ... (код Form2 из предыдущего примера) ...
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // Открываем Form3 (Подать заявку)
+            Form3 form3 = new Form3();
+            form3.Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // Открываем Form4 (Посмотреть заявки)
+            Form4 form4 = new Form4();
+            form4.Show();
+        }
+
+        // ... (остальной код Form2) ...
+    }
+
+    public partial class Form3 : Form
+    {
+        public Form3()
+        {
+            InitializeComponent();
+
+            // Создаем элементы управления
+            Label nameLabel = new Label();
+            nameLabel.Text = "Имя:";
+            nameLabel.Location = new Point(50, 50);
+
+            TextBox nameTextBox = new TextBox();
+            nameTextBox.Location = new Point(100, 50);
+
+            Label dateLabel = new Label();
+            dateLabel.Text = "Дата:";
+            dateLabel.Location = new Point(50, 100);
+
+            TextBox dateTextBox = new TextBox();
+            dateTextBox.Location = new Point(100, 100);
+
+            Label typeLabel = new Label();
+            typeLabel.Text = "Тип неисправности:";
+            typeLabel.Location = new Point(50, 150);
+
+            TextBox typeTextBox = new TextBox();
+            typeTextBox.Location = new Point(150, 150);
+
+            Label descriptionLabel = new Label();
+            descriptionLabel.Text = "Описание:";
+            descriptionLabel.Location = new Point(50, 200);
+
+            TextBox descriptionTextBox = new TextBox();
+            descriptionTextBox.Location = new Point(100, 200);
+            descriptionTextBox.Multiline = true;
+            descriptionTextBox.Height = 100;
+
+            Button submitButton = new Button();
+            submitButton.Text = "Подать заявку";
+            submitButton.Location = new Point(50, 350);
+            submitButton.Click += button1_Click;
+
+            Button cancelButton = new Button();
+            cancelButton.Text = "Отмена";
+            cancelButton.Location = new Point(150, 350);
+            cancelButton.Click += button2_Click;
+
+            // Добавляем элементы управления на форму
+            this.Controls.Add(nameLabel);
+            this.Controls.Add(nameTextBox);
+            this.Controls.Add(dateLabel);
+            this.Controls.Add(dateTextBox);
+            this.Controls.Add(typeLabel);
+            this.Controls.Add(typeTextBox);
+            this.Controls.Add(descriptionLabel);
+            this.Controls.Add(descriptionTextBox);
+            this.Controls.Add(submitButton);
+            this.Controls.Add(cancelButton);
+
+            // Задаем заголовок формы
+            this.Text = "Подача заявки";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // Получаем значения из полей ввода
+            string name = nameTextBox.Text;
+            string date = dateTextBox.Text;
+            string type = typeTextBox.Text;
+            string description = descriptionTextBox.Text;
+
+            // Проверяем, не пустые ли поля
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(date) || string.IsNullOrEmpty(type) || string.IsNullOrEmpty(description))
+            {
+                MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Создаем новую заявку
+            Application newApplication = new Application(name, date, type, description);
+
+            // Добавляем заявку в список заявок
+            Form2.applications.Add(newApplication);
+
+            // Закрываем Form3 и возвращаемся на Form2
+            this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+    }
+
+    public partial class Form4 : Form
+    {
+        public Form4()
+        {
+            InitializeComponent();
+
+            // Создаем DataGridView для отображения заявок
+            DataGridView dataGridView = new DataGridView();
+            dataGridView.Location = new Point(10, 10);
+            dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            // Задаем заголовки столбцов
+            dataGridView.Columns.Add("Имя", "Имя");
+            dataGridView.Columns.Add("Дата", "Дата");
+            dataGridView.Columns.Add("Тип неисправности", "Тип неисправности");
+            dataGridView.Columns.Add("Описание", "Описание");
+
+            // Заполняем DataGridView данными из списка заявок
+            foreach (Application application in Form2.applications)
+            {
+                dataGridView.Rows.Add(application.Name, application.Date, application.Type, application.Description);
+            }
+
+            // Добавляем DataGridView на форму
+            this.Controls.Add(dataGridView);
+
+            // Задаем заголовок формы
+            this.Text = "Просмотр заявок";
+        }
+    }
+
+    // Класс для представления заявки
+    public class Application
+    {
+        public string Name { get; set; }
+        public string Date { get; set; }
+        public string Type { get; set; }
+        public string Description { get; set; }
+
+        public Application(string name, string date, string type, string description)
+        {
+            Name = name;
+            Date = date;
+            Type = type;
+            Description = description;
+        }
+    }
+}
+```
+
+**Объяснение кода:**
+
+1.  **Form2:**
+    *   Объявлен статический список `applications` типа `List<Application>`, чтобы хранить все поданные заявки.
+    *   В обработчике события `button2_Click` теперь создается объект `Form4` для просмотра заявок.
+
+2.  **Form3:**
+    *   Создаются элементы управления для ввода информации о заявке (текстовые поля, метки).
+    *   В обработчике события `button1_Click` (кнопка "Подать заявку"):
+        *   Получаются значения из текстовых полей.
+        *   Проверяется, не пустые ли поля.
+        *   Создается новый объект `Application` с полученными данными.
+        *   Добавляется новая заявка в список `Form2.applications`.
+        *   Закрывается `Form3`.
+
+3.  **Form4:**
+    *   Создается `DataGridView` для отображения заявок.
+    *   Добавляются столбцы с соответствующими заголовками.
+    *   Проходится цикл по списку `Form2.applications`, и для каждой заявки добавляется новая строка в `DataGridView`.
+    *   `DataGridView` добавляется на форму.
+
+4.  **Application:**
+    *   Создается класс `Application` для представления информации о заявке.
+    *   В конструкторе класса инициализируются свойства `Name`, `Date`, `Type` и `Description`.
+
+**Как это работает:**
+
+*   Пользователь заполняет поля в `Form3` и нажимает "Подать заявку".
+*   Данные из полей ввода сохраняются в объект `Application`.
+*   Объект `Application` добавляется в список `Form2.applications`.
+*   `Form3` закрывается, и пользователь возвращается на `Form2`.
+*   Когда пользователь нажимает "Посмотреть заявки" в `Form2`, открывается `Form4`.
+*   `Form4` заполняет `DataGridView` данными из списка `Form2.applications`, отображая все поданные заявки.
+
+**Важно:**  
+*   В этом коде реализован простой функционал для хранения данных о заявках. В реальном приложении вы можете использовать базу данных для более надежного хранения и управления данными.
+*   Добавьте проверку ввода данных для более надежной работы приложения.
+*   Проверьте, что ваш код работает корректно, и внесите необходимые изменения для соответствия вашим требованиям. 

@@ -1,0 +1,162 @@
+```csharp
+using System;
+using System.Windows.Forms;
+
+namespace SimpleLoginForm
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+
+            // Создаем элементы управления
+            Label loginLabel = new Label();
+            loginLabel.Text = "Логин:";
+            loginLabel.Location = new Point(50, 50);
+
+            TextBox loginTextBox = new TextBox();
+            loginTextBox.Location = new Point(100, 50);
+
+            Label passwordLabel = new Label();
+            passwordLabel.Text = "Пароль:";
+            passwordLabel.Location = new Point(50, 100);
+
+            TextBox passwordTextBox = new TextBox();
+            passwordTextBox.Location = new Point(100, 100);
+            passwordTextBox.PasswordChar = '*'; // Отображаем символы пароля как звездочки
+
+            Label confirmPasswordLabel = new Label();
+            confirmPasswordLabel.Text = "Повторить пароль:";
+            confirmPasswordLabel.Location = new Point(50, 150);
+
+            TextBox confirmPasswordTextBox = new TextBox();
+            confirmPasswordTextBox.Location = new Point(150, 150);
+            confirmPasswordTextBox.PasswordChar = '*';
+
+            Button loginButton = new Button();
+            loginButton.Text = "Войти";
+            loginButton.Location = new Point(50, 200);
+            loginButton.Click += button1_Click;
+
+            Button cancelButton = new Button();
+            cancelButton.Text = "Отмена";
+            cancelButton.Location = new Point(150, 200);
+            cancelButton.Click += button2_Click;
+
+            // Добавляем элементы управления на форму
+            this.Controls.Add(loginLabel);
+            this.Controls.Add(loginTextBox);
+            this.Controls.Add(passwordLabel);
+            this.Controls.Add(passwordTextBox);
+            this.Controls.Add(confirmPasswordLabel);
+            this.Controls.Add(confirmPasswordTextBox);
+            this.Controls.Add(loginButton);
+            this.Controls.Add(cancelButton);
+
+            // Задаем заголовок формы
+            this.Text = "Вход/Регистрация";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+	{
+    		// Получаем значения из полей ввода
+    		string login = loginTextBox.Text;
+    		string password = passwordTextBox.Text;
+    		string confirmPassword = confirmPasswordTextBox.Text;
+
+    		// Проверка на пустые поля
+    		if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword))
+    		{
+        		MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        		return; // Прерываем выполнение метода, если есть пустые поля
+    		}
+
+    		// Проверка паролей на совпадение
+    		if (password != confirmPassword)
+    		{
+        		MessageBox.Show("Пароли не совпадают.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        		return; // Прерываем выполнение метода, если пароли не совпадают
+    		}
+
+    		// Если проверка прошла успешно, открываем Form2
+    		Form2 form2 = new Form2();
+    		form2.Show();
+	}
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+    }
+
+    public partial class Form2 : Form
+    {
+        public Form2()
+        {
+            InitializeComponent();
+
+            // Создаем текстовую метку на Form2
+            Label welcomeLabel = new Label();
+            welcomeLabel.Text = "Добро пожаловать!";
+            welcomeLabel.Location = new Point(100, 50);
+
+            this.Controls.Add(welcomeLabel);
+
+            // Задаем заголовок формы
+            this.Text = "Добро пожаловать!";
+        }
+    }
+}
+```
+
+private void button1_Click(object sender, EventArgs e)
+{
+    // Получаем значения из полей ввода
+    string login = loginTextBox.Text;
+    string password = passwordTextBox.Text;
+    string confirmPassword = confirmPasswordTextBox.Text;
+
+    // Проверка на пустые поля
+    if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword))
+    {
+        MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        return; // Прерываем выполнение метода, если есть пустые поля
+    }
+
+    // Проверка паролей на совпадение
+    if (password != confirmPassword)
+    {
+        MessageBox.Show("Пароли не совпадают.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        return; // Прерываем выполнение метода, если пароли не совпадают
+    }
+
+    // Если проверка прошла успешно, открываем Form2
+    Form2 form2 = new Form2();
+    form2.Show();
+}
+
+
+
+**Объяснение кода:**
+
+1.  **Form1 (Вход/Регистрация):**
+    *   Создаются все необходимые элементы управления: метки (`Label`), поля ввода (`TextBox`), кнопки (`Button`).
+    *   Элементы управления располагаются на форме с помощью свойства `Location`.
+    *   Кнопка "Войти" (`loginButton`) привязывается к событию `Click` с помощью `loginButton.Click += button1_Click;`. Это означает, что при нажатии на кнопку будет вызываться метод `button1_Click`.
+    *   Кнопка "Отмена" (`cancelButton`) привязывается к событию `Click` с помощью `cancelButton.Click += button2_Click;`. 
+    *   Все элементы управления добавляются на форму с помощью `this.Controls.Add()`.
+    *   Задается заголовок формы с помощью `this.Text = "Вход/Регистрация";`.
+
+2.  **Form2 (Добро пожаловать):**
+    *   Создается текстовая метка (`welcomeLabel`) с приветствием "Добро пожаловать!".
+    *   Метка добавляется на форму с помощью `this.Controls.Add()`.
+    *   Задается заголовок формы с помощью `this.Text = "Добро пожаловать!";`.
+
+3.  **Методы button1_Click и button2_Click:**
+    *   `button1_Click`  отвечает за открытие `Form2` при нажатии на кнопку "Войти". 
+    *   `button2_Click`  закрывает текущую форму `Form1` при нажатии на кнопку "Отмена".
+
+**Важно:** Этот код является примером и не включает в себя проверку ввода данных. Вам необходимо добавить проверку паролей, пустых полей и другие необходимые проверки в метод `button1_Click`.
+
+

@@ -1,0 +1,46 @@
+using System;
+using System.Windows.Forms;
+
+namespace YourNamespace
+{
+    public partial class Form3 : Form
+    {
+        public Form3()
+        {
+            InitializeComponent();
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+
+            // Создание кнопки "Просмотр заявок"
+            Button buttonViewRequests = new Button();
+            buttonViewRequests.Text = "Просмотр заявок";
+            buttonViewRequests.Location = new System.Drawing.Point(50, 50);
+            buttonViewRequests.Click += new EventHandler(buttonViewRequests_Click);
+            this.Controls.Add(buttonViewRequests);
+
+            // Создание кнопки "Редактирование заявок"
+            Button buttonEditRequests = new Button();
+            buttonEditRequests.Text = "Редактирование заявок";
+            buttonEditRequests.Location = new System.Drawing.Point(50, 100);
+            buttonEditRequests.Click += new EventHandler(buttonEditRequests_Click);
+            this.Controls.Add(buttonEditRequests);
+
+            this.ResumeLayout(false);
+        }
+
+        private void buttonViewRequests_Click(object sender, EventArgs e)
+        {
+            // Открытие формы с поданными заявками в виде таблицы
+            FormRequests formRequests = new FormRequests();
+            formRequests.ShowDialog();
+        }
+
+        private void buttonEditRequests_Click(object sender, EventArgs e)
+        {
+            // Открытие формы для редактирования заявок (добавьте соответствующий код)
+        }
+    }
+}
